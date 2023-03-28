@@ -56,7 +56,7 @@ args = parser.parse_args()
 
 device = args.device or 'cuda' if cuda.is_available() else 'cpu'
 
-model, layers, config = models.load(f'{args.model}/{args.dataset}',
+model, layers, config = models.load(f'{args.model}/imagenet',
                                     map_location=device,
                                     path=args.model_file)
 

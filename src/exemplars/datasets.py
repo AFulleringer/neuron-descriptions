@@ -28,6 +28,7 @@ KEYS.IMAGENET_SPURIOUS_TEXT = 'imagenet-spurious-text'
 KEYS.IMAGENET_SPURIOUS_COLOR = 'imagenet-spurious-color'
 KEYS.BIGGAN_ZS_IMAGENET = 'biggan-zs-imagenet'
 KEYS.BIGGAN_ZS_PLACES365 = 'biggan-zs-places365'
+KEYS.IMAGENET_DATA = 'imagenet_data'
 
 
 class TensorDatasetOnDisk(torch.utils.data.TensorDataset):
@@ -58,6 +59,14 @@ def default_dataset_configs(
     """Return the default dataset configs."""
     configs = {
         KEYS.IMAGENET:
+            hubs.DatasetConfig(torchvision.datasets.ImageFolder,
+                               transform=torchvision.transforms.Compose([
+                                   torchvision.transforms.Resize(256),
+                                   torchvision.transforms.CenterCrop(224),
+                                   torchvision.transforms.ToTensor(),
+                                   renormalize.NORMALIZER['imagenet']
+                               ])),
+        KEYS.IMAGENET_DATA:
             hubs.DatasetConfig(torchvision.datasets.ImageFolder,
                                transform=torchvision.transforms.Compose([
                                    torchvision.transforms.Resize(256),

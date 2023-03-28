@@ -68,7 +68,7 @@ if isinstance(config.exemplars, models.GenerativeModelExemplarsConfig):
 elif dataset == datasets.KEYS.IMAGENET_BLURRED:
     dataset = datasets.KEYS.IMAGENET
 
-dataset = datasets.load(dataset, path='/data/imagenet_data')
+dataset = datasets.load(dataset, path=args.dataset_path)
 
 if args.layer_names:
     layers = args.layer_names

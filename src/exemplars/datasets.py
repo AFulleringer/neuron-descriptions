@@ -123,5 +123,6 @@ def load(name: str,
 
     """
     configs = configs or {}
+    print(configs)
     hub = default_dataset_hub(**configs)
     return hub.load(name, **kwargs)

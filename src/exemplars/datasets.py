@@ -105,6 +105,7 @@ def default_dataset_configs(
 def default_dataset_hub(**others: hubs.DatasetConfig) -> hubs.DatasetHub:
     """Return configs for all datasets used in dissection."""
     configs = default_dataset_configs(**others)
+    print(configs.keys())
     return hubs.DatasetHub(**configs)
 
 

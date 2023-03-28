@@ -88,7 +88,7 @@ data_dir = data_root / args.dataset
 results_root = args.results_root
 if results_root is None:
     results_root = env.results_dir() / 'exemplars'
-results_dir = results_root / args.model / args.dataset
+results_dir = results_root / args.model / 'imagenet'
 
 viz_root = args.viz_root
 viz_dir = None

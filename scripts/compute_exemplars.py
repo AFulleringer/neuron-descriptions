@@ -6,8 +6,7 @@ from src.exemplars import compute, datasets, models
 from src.utils import env
 
 from torch import cuda
-import torch
-print(torch.version.cuda)
+
 parser = argparse.ArgumentParser(description='compute unit exemplars')
 parser.add_argument('model', help='model architecture')
 parser.add_argument('dataset', help='dataset of unseen examples for model')

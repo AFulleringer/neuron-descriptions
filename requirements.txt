@@ -373,7 +373,7 @@ tomli==2.0.1
     #   black
     #   mypy
     #   pytest
-torch==1.11.0
+#torch==1.11.0
     # via
     #   -r requirements.in
     #   allennlp

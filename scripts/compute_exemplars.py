@@ -83,7 +83,7 @@ if args.units:
 data_root = args.data_root
 if data_root is None:
     data_root = env.data_dir()
-data_dir = data_root / args.model / args.dataset
+data_dir = data_root / args.dataset
 
 results_root = args.results_root
 if results_root is None:

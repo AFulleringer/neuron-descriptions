@@ -178,5 +178,7 @@ if not args.test_symlink:
                                    num_workers=args.num_workers,
                                    **config.exemplars.kwargs)
 
+print(data_dir)
+print(results_dir)
 if not args.no_link:
     data_dir.symlink_to(results_dir, target_is_directory=True)

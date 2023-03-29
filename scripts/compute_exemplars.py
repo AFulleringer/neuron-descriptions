@@ -1,14 +1,13 @@
 """Dissect a pretrained vision model."""
 import argparse
 import pathlib
-from os import path
+
 from src.exemplars import compute, datasets, models
 from src.utils import env
 
 from torch import cuda
-
-import torch #Need it for flexible model loading
-# print(torch.version.cuda)
+import torch
+from os import path
 
 parser = argparse.ArgumentParser(description='compute unit exemplars')
 parser.add_argument('model', help='model architecture')
@@ -60,12 +59,11 @@ parser.add_argument('--device', help='manually set device (default: guessed)')
 parser.add_argument("--results-directory", type=str)
 parser.add_argument("--use-our-model", action='store_true')
 
-
 args = parser.parse_args()
 
 device = args.device or 'cuda' if cuda.is_available() else 'cpu'
 
-model, layers, config = models.load(f'{args.model}/imagenet',
+model, layers, config = models.load(f'{args.model}/{args.dataset}',
                                     map_location=device,
                                     path=args.model_file)
 
@@ -114,12 +112,6 @@ def get_my_model_dict_and_layer(results_directory):
 if args.use_our_model:
     my_model_dict,  = get_my_model_dict_and_layer(args.results_directory)
     model = model.load_state_dict(my_model_dict)
-### Get the state dict to load in the weights we actually want!
-# Need to figure out what the last saved model was (Use my utils for that?)
-# Also should add in the logic to convert our layer names to theirs - a dict
-# need an args.results_directory?
-
-
 
 
 dataset, generative = args.dataset, False
@@ -145,16 +137,12 @@ if args.units:
 data_root = args.data_root
 if data_root is None:
     data_root = env.data_dir()
-data_dir = data_root / args.dataset
+data_dir = data_root / args.model / args.dataset
 
 results_root = args.results_root
 if results_root is None:
     results_root = env.results_dir() / 'exemplars'
-if args.use_our_model:
-    results_dir = results_root / args.model / args.results_directory / 'imagenet'
-else:
-    results_dir = results_root / args.model / 'imagenet'
-
+results_dir = results_root / args.model / args.dataset
 
 viz_root = args.viz_root
 viz_dir = None

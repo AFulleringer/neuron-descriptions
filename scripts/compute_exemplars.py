@@ -68,8 +68,6 @@ model, layers, config = models.load(f'{args.model}/imagenet',
                                     map_location=device,
                                     path=args.model_file)
 
-print(layers)
-exit(0)
 def get_my_model_dict_and_layer(results_directory):
     if not path.exists(results_directory):
         print(f'ERROR, the results directory {results_directory} does not exist!')
@@ -109,13 +107,12 @@ def get_my_model_dict_and_layer(results_directory):
         'features_10': 'conv5',
     }
     milan_layer = layer_dict[my_layer]
-    model_dict =  torch.load(path.join(results_directory, f"model_checkpoint_step_{steps[-1]}.pt"))
-    return model_dict, milan_layer
+    model_dict = torch.load(path.join(results_directory, f"model_checkpoint_step_{steps[-1]}.pt"))
+    return model_dict
 
 
-my_model_dict, model_layer = get_my_model_dict_and_layer(args.results_directory)
+my_model_dict,  = get_my_model_dict_and_layer(args.results_directory)
 model = model.load_state_dict(my_model_dict)
-layers = model_layer
 ### Get the state dict to load in the weights we actually want!
 # Need to figure out what the last saved model was (Use my utils for that?)
 # Also should add in the logic to convert our layer names to theirs - a dict

@@ -58,6 +58,8 @@ parser.add_argument('--device', help='manually set device (default: guessed)')
 #This is for me!
 parser.add_argument("--results-directory", type=str)
 parser.add_argument("--use-our-model", action='store_true')
+parser.add_argument("--test-symlink", action='store_true') #Used for debugging. If the symlink fails, stop regeneration of exemplars
+
 
 args = parser.parse_args()
 
@@ -151,20 +153,10 @@ if viz_root is not None:
 elif not args.no_viz:
     viz_dir = results_root / 'viz' / args.model / args.dataset
 
-for layer in layers:
-    if generative:
-        compute.generative(model,
-                           dataset,
-                           layer=layer,
-                           units=units,
-                           results_dir=results_dir,
-                           viz_dir=viz_dir,
-                           save_viz=not args.no_viz,
-                           device=device,
-                           num_workers=args.num_workers,
-                           **config.exemplars.kwargs)
-    else:
-        compute.discriminative(model,
+if not args.test_symlink:
+    for layer in layers:
+        if generative:
+            compute.generative(model,
                                dataset,
                                layer=layer,
                                units=units,
@@ -174,6 +166,17 @@ for layer in layers:
                                device=device,
                                num_workers=args.num_workers,
                                **config.exemplars.kwargs)
+        else:
+            compute.discriminative(model,
+                                   dataset,
+                                   layer=layer,
+                                   units=units,
+                                   results_dir=results_dir,
+                                   viz_dir=viz_dir,
+                                   save_viz=not args.no_viz,
+                                   device=device,
+                                   num_workers=args.num_workers,
+                                   **config.exemplars.kwargs)
 
 if not args.no_link:
     data_dir.symlink_to(results_dir, target_is_directory=True)

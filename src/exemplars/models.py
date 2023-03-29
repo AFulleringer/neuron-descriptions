@@ -167,6 +167,12 @@ def default_model_configs(**others: ModelConfig) -> Mapping[str, ModelConfig]:
                 load_weights=False,
                 layers=LAYERS.ALEXNET,
             ),
+        KEYS.ATTACKED_ALEXNET_IMAGENET:
+            ModelConfig(
+                models.alexnet_seq,
+                load_weights=True,
+                layers=LAYERS.ALEXNET,
+            ),
         KEYS.ALEXNET_IMAGENET_BLURRED:
             ModelConfig(
                 models.alexnet,

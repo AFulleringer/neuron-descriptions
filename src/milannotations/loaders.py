@@ -10,6 +10,7 @@ import torch.utils.data
 
 KEYS = easydict.EasyDict()
 KEYS.ALEXNET = 'alexnet'
+KEYS.ATTACKED_ALEXNET = 'attacked_alexnet'
 KEYS.BIGGAN = 'biggan'
 KEYS.DENSENET121 = 'densenet121'
 KEYS.DENSENET201 = 'densenet201'

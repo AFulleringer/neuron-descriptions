@@ -1,13 +1,15 @@
 """Dissect a pretrained vision model."""
 import argparse
 import pathlib
-
+from os import path
 from src.exemplars import compute, datasets, models
 from src.utils import env
 
 from torch import cuda
-import torch
-print(torch.version.cuda)
+
+import torch #Need it for flexible model loading
+# print(torch.version.cuda)
+
 parser = argparse.ArgumentParser(description='compute unit exemplars')
 parser.add_argument('model', help='model architecture')
 parser.add_argument('dataset', help='dataset of unseen examples for model')
@@ -53,6 +55,11 @@ parser.add_argument('--num-workers',
                     default=16,
                     help='number of worker threads (default: 16)')
 parser.add_argument('--device', help='manually set device (default: guessed)')
+
+#This is for me!
+parser.add_argument("--results-directory", type=str)
+
+
 args = parser.parse_args()
 
 device = args.device or 'cuda' if cuda.is_available() else 'cpu'
@@ -60,6 +67,62 @@ device = args.device or 'cuda' if cuda.is_available() else 'cpu'
 model, layers, config = models.load(f'{args.model}/imagenet',
                                     map_location=device,
                                     path=args.model_file)
+
+print(layers)
+exit(0)
+def get_my_model_dict_and_layer(results_directory):
+    if not path.exists(results_directory):
+        print(f'ERROR, the results directory {results_directory} does not exist!')
+        print('Exiting program')
+        exit(0)
+
+    def get_tuple_from_config_dict(my_dict, dict_key):
+        output = my_dict[dict_key]
+        output = output.strip('[')
+        output = output.strip(']')
+        output = output.split(',')
+        return output
+
+    config_dict = {}
+    with open(path.join(args.results_directory, "configuration.txt")) as f:
+        for line in f:
+            (key, val) = line.split(':')
+            config_dict[key] = val.strip()
+    #print(config_dict)
+    steps = [i for i in
+             range(0, int(config_dict['nsteps']) + 1, int(config_dict['save_interval']))]
+
+    #If you're not tracking intermediate steps, take only the first and final versions of the model
+    #steps = [steps[0], steps[-1]]
+
+    # Feature name is arbitrary but necessary for the hook
+    feature_name = 'activations'
+    layers = get_tuple_from_config_dict(config_dict, 'layer')
+    my_layer = layers[0]
+    # used for converting our name of the model version to theirs.
+    # ('conv1', 'conv2', 'conv3', 'conv4', 'conv5')
+    layer_dict = {
+        'features_0': 'conv1',
+        'features_3': 'conv2',
+        'features_6': 'conv3',
+        'features_8': 'conv4',
+        'features_10': 'conv5',
+    }
+    milan_layer = layer_dict[my_layer]
+    model_dict =  torch.load(path.join(results_directory, f"model_checkpoint_step_{steps[-1]}.pt"))
+    return model_dict, milan_layer
+
+
+my_model_dict, model_layer = get_my_model_dict_and_layer(args.results_directory)
+model = model.load_state_dict(my_model_dict)
+layers = model_layer
+### Get the state dict to load in the weights we actually want!
+# Need to figure out what the last saved model was (Use my utils for that?)
+# Also should add in the logic to convert our layer names to theirs - a dict
+# need an args.results_directory?
+
+
+
 
 dataset, generative = args.dataset, False
 if isinstance(config.exemplars, models.GenerativeModelExemplarsConfig):

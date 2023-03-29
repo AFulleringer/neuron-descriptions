@@ -58,6 +58,7 @@ parser.add_argument('--device', help='manually set device (default: guessed)')
 
 #This is for me!
 parser.add_argument("--results-directory", type=str)
+parser.add_argument("--use-our-model", action='store_true')
 
 
 args = parser.parse_args()
@@ -110,9 +111,9 @@ def get_my_model_dict_and_layer(results_directory):
     model_dict = torch.load(path.join(results_directory, f"model_checkpoint_step_{steps[-1]}.pt"))
     return model_dict
 
-
-my_model_dict,  = get_my_model_dict_and_layer(args.results_directory)
-model = model.load_state_dict(my_model_dict)
+if args.use_our_model:
+    my_model_dict,  = get_my_model_dict_and_layer(args.results_directory)
+    model = model.load_state_dict(my_model_dict)
 ### Get the state dict to load in the weights we actually want!
 # Need to figure out what the last saved model was (Use my utils for that?)
 # Also should add in the logic to convert our layer names to theirs - a dict
@@ -149,7 +150,11 @@ data_dir = data_root / args.dataset
 results_root = args.results_root
 if results_root is None:
     results_root = env.results_dir() / 'exemplars'
-results_dir = results_root / args.model / 'imagenet'
+if args.use_our_model:
+    results_dir = results_root / args.model / args.results_directory / 'imagenet'
+else:
+    results_dir = results_root / args.model / 'imagenet'
+
 
 viz_root = args.viz_root
 viz_dir = None

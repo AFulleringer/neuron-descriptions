@@ -182,11 +182,14 @@ def maybe_merge_and_load_dataset(
         datasets.AnyTopImagesDataset: The loaded dataset, post merging.
 
     """
+    print(f'root: {root}')
     root = pathlib.Path(root)
+    print(f'root: {root}')
     layer_dirs = [path for path in root.iterdir() if path.is_dir()]
 
     needs_merge = False
     for layer_dir in layer_dirs:
+        print(f'layer_dir: {layer_dir}')
         images_file = layer_dir / 'images.npy'
         if not images_file.exists():
             needs_merge = True
@@ -196,6 +199,7 @@ def maybe_merge_and_load_dataset(
             raise ValueError('>= 1 layers are missing missing source images '
                              'and no source dataset was provided')
         eg_layer_name = next(ld.name for ld in root.iterdir() if ld.is_dir())
+        print(f'eg_layer_name {eg_layer_name}')
         eg_masks_file = root / eg_layer_name / 'masks.npy'
         if not eg_masks_file.exists():
             raise FileNotFoundError(

@@ -41,8 +41,10 @@ device = args.device or 'cuda' if cuda.is_available() else 'cpu'
 # Prepare directories.
 key = f'{args.model}/{args.dataset}'
 data_dir = args.data_dir or env.data_dir()
+print('data_dir', data_dir)
+print('env.data_dir', env.data_dir())
 data_root = data_dir / key
-
+print('data_root', data_root)
 results_dir = args.results_dir
 if results_dir is None:
     results_dir = env.results_dir() / 'descriptions'

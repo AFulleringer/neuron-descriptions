@@ -246,6 +246,7 @@ def load(name: str = 'base',
     """
     configs = configs or {}
     dataset_hub = default_dataset_hub(**configs)
+    print(f'name: {name}')
     if name in DATASET_GROUPINGS:
         dataset = dataset_hub.load_all(*DATASET_GROUPINGS[name], **kwargs)
     elif name in dataset_hub.configs:

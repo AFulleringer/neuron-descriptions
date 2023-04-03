@@ -70,7 +70,7 @@ model, layers, config = models.load(f'{args.model}/{args.dataset}',
                                     path=args.model_file)
 
 print(args)
-exit(0)
+
 def get_my_model_dict_and_layer(results_directory):
     if not path.exists(results_directory):
         print(f'ERROR, the results directory {results_directory} does not exist!')
@@ -128,7 +128,7 @@ elif dataset == datasets.KEYS.IMAGENET_BLURRED:
     dataset = datasets.KEYS.IMAGENET
 
 dataset = datasets.load(dataset, path=args.dataset_path)
-
+print(f'dataset: {dataset}')
 if args.layer_names:
     layers = args.layer_names
 elif args.layer_indices:

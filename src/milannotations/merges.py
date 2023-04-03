@@ -195,6 +195,7 @@ def maybe_merge_and_load_dataset(
             needs_merge = True
 
     if needs_merge:
+        print(f'source: {source}')
         if source is None:
             raise ValueError('>= 1 layers are missing missing source images '
                              'and no source dataset was provided')

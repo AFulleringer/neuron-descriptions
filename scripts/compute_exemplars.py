@@ -117,6 +117,7 @@ if args.use_our_model:
 
 
 dataset, generative = args.dataset, False
+print(f'dataset: {dataset}')
 if isinstance(config.exemplars, models.GenerativeModelExemplarsConfig):
     dataset = config.exemplars.dataset
     generative = True

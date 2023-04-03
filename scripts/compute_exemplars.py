@@ -69,6 +69,8 @@ model, layers, config = models.load(f'{args.model}/{args.dataset}',
                                     map_location=device,
                                     path=args.model_file)
 
+print(args)
+exit(0)
 def get_my_model_dict_and_layer(results_directory):
     if not path.exists(results_directory):
         print(f'ERROR, the results directory {results_directory} does not exist!')

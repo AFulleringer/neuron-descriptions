@@ -239,6 +239,7 @@ class DatasetConfig:
         path = pathlib.Path(path)
         print(f'The path: {path}')
         if not path.exists() and self.url is not None:
+
             path.mkdir(parents=True)
             with tempfile.TemporaryDirectory() as tempdir:
                 file = pathlib.Path(tempdir) / self.url.split('/')[-1]

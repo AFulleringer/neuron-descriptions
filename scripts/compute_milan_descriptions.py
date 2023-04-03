@@ -72,3 +72,4 @@ for index, description in enumerate(predictions):
 results_csv_file = results_dir / f'{key.replace("/", "_")}.csv'
 with results_csv_file.open('w') as handle:
     csv.writer(handle).writerows(rows)
+print(f'results located in:\n {results_csv_file}')

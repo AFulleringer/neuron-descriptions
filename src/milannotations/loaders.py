@@ -254,6 +254,7 @@ def load(name: str = 'base',
     else:
         path = kwargs.get('path', env.data_dir() / name)
         path = pathlib.Path(path)
+        print(f'path to milannotations set {path}')
         if not path.exists():
             raise KeyError(f'unknown milannotations set: {name}')
         kwargs.setdefault('path', path)

@@ -183,7 +183,7 @@ def default_dataset_configs(
     configs = {}
 
     # Configs for annotated models.
-    for key in (KEYS.ALEXNET_IMAGENET, KEYS.ALEXNET_PLACES365,
+    for key in (KEYS.ALEXNET_IMAGENET, KEYS.ALEXNET_PLACES365, KEYS.ATTACKED_ALEXNET_IMAGENET,
                 KEYS.BIGGAN_IMAGENET, KEYS.BIGGAN_PLACES365,
                 KEYS.DINO_VITS8_IMAGENET, KEYS.RESNET152_IMAGENET,
                 KEYS.RESNET152_PLACES365):

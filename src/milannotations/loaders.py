@@ -195,7 +195,7 @@ def default_dataset_configs(
             annotation_count=3)
 
         ##What to do here for non-annotated model???
-    for key in (KEYS.ATTACKED_ALEXNET_IMAGENET):
+    for key in ([KEYS.ATTACKED_ALEXNET_IMAGENET,]):
         print(f"THE KEY: {key}")
         arch, dataset = key.split('/')
         configs[key] = hubs.DatasetConfig(

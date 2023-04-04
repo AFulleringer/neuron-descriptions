@@ -34,6 +34,7 @@ parser.add_argument('--milan',
                     default=milannotations.KEYS.BASE,
                     help='milan model to use (default: base)')
 parser.add_argument('--device', help='manually set device (default: guessed)')
+parser.add_argument('--attack-name', default='')
 args = parser.parse_args()
 
 device = args.device or 'cuda' if cuda.is_available() else 'cpu'
@@ -71,7 +72,8 @@ for index, description in enumerate(predictions):
     sample = dataset[index]
     row = (str(sample.layer), str(sample.unit), description)
     rows.append(row)
-results_csv_file = results_dir / f'{key.replace("/", "_")}.csv'
+
+results_csv_file = results_dir / f'{key.replace("/", "_")}_{args.attack_name}.csv'
 with results_csv_file.open('w') as handle:
     csv.writer(handle).writerows(rows)
 print(f'results located in:\n {results_csv_file}')

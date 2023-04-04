@@ -183,7 +183,7 @@ def default_dataset_configs(
     configs = {}
 
     # Configs for annotated models.
-    for key in (KEYS.ALEXNET_IMAGENET, KEYS.ALEXNET_PLACES365, KEYS.ATTACKED_ALEXNET_IMAGENET,
+    for key in (KEYS.ALEXNET_IMAGENET, KEYS.ALEXNET_PLACES365,
                 KEYS.BIGGAN_IMAGENET, KEYS.BIGGAN_PLACES365,
                 KEYS.DINO_VITS8_IMAGENET, KEYS.RESNET152_IMAGENET,
                 KEYS.RESNET152_PLACES365):
@@ -193,6 +193,15 @@ def default_dataset_configs(
             url=f'{hubs.HOST}/data/{arch}-{dataset}.zip',
             source=f'{dataset}/val' if arch != KEYS.BIGGAN else None,
             annotation_count=3)
+
+        ##What to do here for non-annotated model???
+    for key in (KEYS.ATTACKED_ALEXNET_IMAGENET):
+        arch, dataset = key.split('/')
+        configs[key] = hubs.DatasetConfig(
+            merges.maybe_merge_and_load_dataset,
+            url=f'{hubs.HOST}/data/{arch}-{dataset}.zip',
+            source=f'{dataset}/val' if arch != KEYS.BIGGAN else None,
+           )
 
     # Extra configs for models that have blurred-imagenet versopns.
     for model in (KEYS.ALEXNET, KEYS.RESNET152):

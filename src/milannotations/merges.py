@@ -230,4 +230,5 @@ def maybe_merge_and_load_dataset(
     if annotations and has_annotations:
         return datasets.AnnotatedTopImagesDataset(root, **kwargs)
     else:
+        print(kwargs)
         return datasets.TopImagesDataset(root, **kwargs)

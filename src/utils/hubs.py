@@ -249,7 +249,7 @@ class DatasetConfig:
 
         if not path.exists():
             raise FileNotFoundError(f'dataset path does not exist: {path}')
-
+        print(f'dataset config kwargs {kwargs}')
         return factory(path, **kwargs)
 
 
@@ -284,7 +284,7 @@ class DatasetHub:
 
         if path is None and config.requires_path:
             path = env.data_dir() / name
-
+        print(f'DatasetHub kwargs {kwargs}')
         dataset = config.load(path=path, **kwargs)
 
         return dataset

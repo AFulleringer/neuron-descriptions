@@ -38,6 +38,7 @@ KEYS = easydict.EasyDict(d=milannotations.KEYS)
 
 LAYERS = easydict.EasyDict()
 LAYERS.ALEXNET = ('conv1', 'conv2', 'conv3', 'conv4', 'conv5')
+LAYERS.ATTACKED_ALEXNET = ('features_0', 'features_3', 'features_6', 'features_8', 'features_10')
 LAYERS.BIGGAN = ('layer0', 'layer1', 'layer2', 'layer3', 'layer4', 'layer5')
 LAYERS.DENSENET121 = (
     'features.conv0',
@@ -170,9 +171,9 @@ def default_model_configs(**others: ModelConfig) -> Mapping[str, ModelConfig]:
 
         KEYS.ATTACKED_ALEXNET_IMAGENET:
             ModelConfig(
-                models.alexnet_seq,
+                models.alexnet,
                 load_weights=True,
-                layers=LAYERS.ALEXNET,
+                layers=LAYERS.ATTACKED_ALEXNET,
             ),
 
         KEYS.ALEXNET_IMAGENET_BLURRED:

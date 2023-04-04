@@ -96,8 +96,7 @@ def get_my_model_dict_and_layer(results_directory):
     #If you're not tracking intermediate steps, take only the first and final versions of the model
     #steps = [steps[0], steps[-1]]
 
-    # Feature name is arbitrary but necessary for the hook
-    feature_name = 'activations'
+
     layers = get_tuple_from_config_dict(config_dict, 'layer')
     my_layer = layers[0]
     # used for converting our name of the model version to theirs.

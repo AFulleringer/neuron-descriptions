@@ -38,7 +38,7 @@ KEYS = easydict.EasyDict(d=milannotations.KEYS)
 
 LAYERS = easydict.EasyDict()
 LAYERS.ALEXNET = ('conv1', 'conv2', 'conv3', 'conv4', 'conv5')
-LAYERS.ATTACKED_ALEXNET = ('features_0', 'features_3', 'features_6', 'features_8', 'features_10')
+LAYERS.ATTACKED_ALEXNET =  ('features_8')
 LAYERS.BIGGAN = ('layer0', 'layer1', 'layer2', 'layer3', 'layer4', 'layer5')
 LAYERS.DENSENET121 = (
     'features.conv0',

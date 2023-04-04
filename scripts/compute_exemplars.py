@@ -127,7 +127,7 @@ elif dataset == datasets.KEYS.IMAGENET_BLURRED:
     dataset = datasets.KEYS.IMAGENET
 print(f'dataset_path {args.dataset_path}')
 dataset = datasets.load(dataset, path=args.dataset_path)
-print(f'dataset: {dataset}')
+#print(f'dataset: {dataset}')
 if args.layer_names:
     layers = args.layer_names
 elif args.layer_indices:

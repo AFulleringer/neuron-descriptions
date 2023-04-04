@@ -55,6 +55,8 @@ decoder = milan.pretrained(args.milan)
 decoder.to(device)
 
 # Load top images.
+print(f'key: {key}')
+print(f'data root: {data_root}')
 dataset = milannotations.load(key, path=data_root)
 
 # Go!
